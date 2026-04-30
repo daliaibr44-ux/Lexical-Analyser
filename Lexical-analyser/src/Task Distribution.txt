@@ -1,3 +1,6 @@
+
+//////////////////////////
+
 Main: 
 public static void main(String[] args)
 private static String readInput()
@@ -13,6 +16,9 @@ private char peek()
 private char advance()
 private void retract()
 
+
+/////////////////////////////////////////////
+
 AutomataBuilder:
 public DFA buildLexerDFA()
 private NFA buildKeywordNFA(String keyword)
@@ -20,10 +26,6 @@ private NFA buildIdentifierNFA()
 private NFA buildNumberNFA()
 private NFA buildOperatorNFA(String operator)
 private NFA buildDelimiterNFA(char delimiter)
-private NFA combineNFAs(List<NFA> nfas)
-private DFA convertToDFA(NFA nfa)
-private Set<NFAState> epsilonClosure(Set<NFAState> states)
-private Set<NFAState> move(Set<NFAState> states, char symbol)
 
 NFA:
 public NFA(NFAState start, Set<NFAState> acceptStates)
@@ -44,6 +46,8 @@ public boolean isAccept()
 public void setTokenType(String type)
 public String getTokenType()
 
+/////////////////////////////////////
+
 DFA:
 public DFA(DFAState startState)
 public DFAState getStartState()
@@ -61,8 +65,16 @@ public void setTokenType(String type)
 public String getTokenType()
 public Set<NFAState> getNFAStates()
 
+AutomataBuilder:
+private NFA combineNFAs(List<NFA> nfas)
+private DFA convertToDFA(NFA nfa)
+private Set<NFAState> epsilonClosure(Set<NFAState> states)
+private Set<NFAState> move(Set<NFAState> states, char symbol)
+
 Token:
 public Token(String type, String value)
 public String getType()
 public String getValue()
 public String toString()
+
+/////////////////////////////
