@@ -1,0 +1,68 @@
+Main: 
+public static void main(String[] args)
+private static String readInput()
+private static void printTokens(List<Token> tokens)
+
+DFALexer:
+public DFALexer(DFA dfa)
+public List<Token> tokenize(String input)
+private Token nextToken()
+private void skipWhitespace()
+private boolean isAtEnd()
+private char peek()
+private char advance()
+private void retract()
+
+AutomataBuilder:
+public DFA buildLexerDFA()
+private NFA buildKeywordNFA(String keyword)
+private NFA buildIdentifierNFA()
+private NFA buildNumberNFA()
+private NFA buildOperatorNFA(String operator)
+private NFA buildDelimiterNFA(char delimiter)
+private NFA combineNFAs(List<NFA> nfas)
+private DFA convertToDFA(NFA nfa)
+private Set<NFAState> epsilonClosure(Set<NFAState> states)
+private Set<NFAState> move(Set<NFAState> states, char symbol)
+
+NFA:
+public NFA(NFAState start, Set<NFAState> acceptStates)
+public void addTransition(NFAState from, char symbol, NFAState to)
+public void addEpsilonTransition(NFAState from, NFAState to)
+public void setTokenType(String tokenType)
+public NFAState getStartState()
+public Set<NFAState> getAcceptStates()
+
+NFAState:
+public NFAState()
+public void addTransition(char symbol, NFAState state)
+public void addEpsilonTransition(NFAState state)
+public List<NFAState> getTransitions(char symbol)
+public List<NFAState> getEpsilonTransitions()
+public void setAccept(boolean accept)
+public boolean isAccept()
+public void setTokenType(String type)
+public String getTokenType()
+
+DFA:
+public DFA(DFAState startState)
+public DFAState getStartState()
+public DFAState transition(DFAState state, char input)
+public void addState(DFAState state)
+public Set<DFAState> getStates()
+
+DFAState:
+public DFAState(Set<NFAState> nfaStates)
+public void addTransition(char symbol, DFAState state)
+public DFAState getTransition(char symbol)
+public void setAccept(boolean accept)
+public boolean isAccept()
+public void setTokenType(String type)
+public String getTokenType()
+public Set<NFAState> getNFAStates()
+
+Token:
+public Token(String type, String value)
+public String getType()
+public String getValue()
+public String toString()
