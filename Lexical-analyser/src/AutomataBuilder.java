@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 public class AutomataBuilder {
 
@@ -27,15 +28,15 @@ public class AutomataBuilder {
             newAccepStates.addAll(nfa.getAcceptStates());
         }
 
-        NFA newNFA = new NFA(newStartState, newAccepStates) ;
+        NFA newNFA = new NFA(newStartState, newAccepStates);
 
         for (Object nfa : nfas) {
             NFAState s = nfa.getStartState();
             newStartState.addEpsilonTransition(s);
             newNFA.addEpsilonTransition(newStartState, s);
-        }  
+        }
         return newNFA;
-        
+
     }
 
     private DFA convertToDFA(NFA nfa) {
@@ -54,22 +55,14 @@ public class AutomataBuilder {
 
         while (!queue.isEmpty()) {
             currentSubset = queue.poll();
+            DFAState currentDFAState = new DFAState(currentSubset);
+            dfa.addState(currentDFAState);
 
             for (Character symbol : tokens) {
 
-                boolean subsetExists = false;
-                Set<NFAState> nextSubset = epsilonClosure(move(nfaStart, symbol));
+                Set<NFAState> nextSubset = epsilonClosure(move(currentDFAState.getNFAStates(), symbol));
 
-                Set<DFAState> dfaStates = dfa.getStates();
-
-                for (DFAState dfaState : dfaStates) {
-                    if (dfaState.getNFAStates().equals(nextSubset)) {
-                        subsetExists = true;
-                        break;
-                    }
-                }
-                if (!subsetExists) {
-                    dfa.addState(new DFAState(nextSubset));
+                if (!dfa.getMap().containsValue(nextSubset)) {
                     queue.add(nextSubset);
                 }
             }
@@ -81,14 +74,24 @@ public class AutomataBuilder {
     }
 
     private Set<NFAState> epsilonClosure(Set<NFAState> states) {
-        Set<NFAStates> newStates = new HashSet<NFAStates>();
 
-        for (Object state : states) {
-            List<NFAState> list = state.getEpsilonTransitions();
-            for (NFAState elem : list) {
-                newStates.add(elem);
+        Set<NFAState> newStates = new HashSet<NFAStates>();
+        Stack<NFAState> stack = new Stack<NFAState>();
+
+        for (NFAState state : states) {
+            stack.add(state);
+            newStates.add(state);
+        }
+        while (!stack.empty()) {
+            NFAState current = stack.pop();
+            for (NFAState next : current.getEpsilonTransitions()) {
+                if (!newStates.contains(next)) {
+                    newStates.add(next);
+                    stack.add(next);
+                }
             }
         }
+
         return newStates;
     }
 
