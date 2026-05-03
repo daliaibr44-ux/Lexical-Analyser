@@ -1,19 +1,18 @@
-
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
 public class DFAState {
 
-    private Set<NFAState> NFAStates;
+    private Set<NFAState> nfaStates;
     private boolean accept;
-    private String tokenType;
     private Map<Character, DFAState> transition;
 
     public DFAState(Set<NFAState> nfaStates) {
-        // set accept var and tokenType ?? 
-        NFAStates = nfaStates;
-        transition = new HashMap<Character, DFAState>();
+        this.nfaStates = new HashSet<>(nfaStates); // defensive copy
+        this.accept = false;
+        this.transition = new HashMap<>();
     }
 
     public void addTransition(char symbol, DFAState state) {
@@ -32,16 +31,20 @@ public class DFAState {
         return accept;
     }
 
-    public void setTokenType(String type) {
-        tokenType = type;
-    }
-
-    public String getTokenType() {
-        return tokenType;
-    }
-
     public Set<NFAState> getNFAStates() {
-        return NFAStates;
+        return nfaStates;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DFAState)) return false;
+        DFAState other = (DFAState) o;
+        return nfaStates.equals(other.nfaStates);
+    }
+
+    @Override
+    public int hashCode() {
+        return nfaStates.hashCode();
+    }
 }

@@ -1,5 +1,6 @@
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -7,12 +8,15 @@ public class DFA {
 
     private DFAState startState;
     private Set<DFAState> states;
-    private Map<DFAState, Set<NFAState> > stateMap ;
+    Set<Character> alphabet;
 
     public DFA(DFAState startState) {
+        alphabet = new HashSet<Character>();
+        states = new HashSet<DFAState>();
+        
         this.startState = startState;
-        stateMap = new HashMap<DFAState, Set<NFAState> >();
-        stateMap.put(startState, startState.getNFAStates());
+        states.add(startState);
+        
     }
 
     public DFAState getStartState() {
@@ -25,15 +29,19 @@ public class DFA {
 
     public void addState(DFAState state) {
         states.add(state);
-        stateMap.put(state, state.getNFAStates());
     }
 
     public Set<DFAState> getStates() {
         return states;
     }
 
-    public Map<DFAState, Set<NFAState> > getMap(){
-        return stateMap;
+    public Set<Character> getAlphabet() {
+        return alphabet;
     }
+
+    public void setAlphabet(Set<Character> alphabet) {
+        this.alphabet = alphabet;
+    }
+
 
 }
