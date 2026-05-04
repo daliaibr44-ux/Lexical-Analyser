@@ -7,7 +7,7 @@ public class DFALexer {
         this.dfa = dfa;
     }
 
-    public void scan(String input) {//scan from user and analysis
+    public void scan(String input) {//scan from user and analysis.
         int i = 0;
         int line = 1;
         int column = 1;
