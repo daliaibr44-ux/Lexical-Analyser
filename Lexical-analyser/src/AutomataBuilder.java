@@ -89,13 +89,18 @@ public class AutomataBuilder {
 
                     // A DFA state is accepting if ANY NFA state in the subset is an accepting state.
                     boolean accept = false;
+                    String tokenType = null;//++
                     for (NFAState state : nextSet) {
                         if (state.isAccept()) {
                             accept = true;
+                            tokenType = state.getTokenType();//++
                             break;
                         }
                     }
                     nextState.setAccept(accept);
+                    if (accept) {//++
+                   nextState.setTokenType(tokenType);
+                       }
 
                     // Add new state to DFA and tracking structures
                     dfa.addState(nextState);

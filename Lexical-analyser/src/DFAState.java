@@ -8,7 +8,7 @@ public class DFAState {
     private Set<NFAState> nfaStates;
     private boolean accept;
     private Map<Character, DFAState> transition;
-
+    private String tokenType;//++
     public DFAState(Set<NFAState> nfaStates) {
         this.nfaStates = new HashSet<>(nfaStates); // defensive copy
         this.accept = false;
@@ -30,6 +30,13 @@ public class DFAState {
     public boolean isAccept() {
         return accept;
     }
+    public void setTokenType(String tokenType) {//++
+    this.tokenType = tokenType;
+}
+
+public String getTokenType() {//++
+    return tokenType;
+}
 
     public Set<NFAState> getNFAStates() {
         return nfaStates;
