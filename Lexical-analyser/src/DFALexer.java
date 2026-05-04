@@ -12,7 +12,7 @@ public class DFALexer {
         int line = 1;
         int column = 1;
 
-        System.out.println("Lexeme\tToken\tPosition");//Table title
+        System.out.println("Lexeme\tToken\tPosition");//Table title.
 
         while (i < input.length()) {//if not reached in thee end of the text coomplete scan
 
